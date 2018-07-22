@@ -21,26 +21,25 @@ const FlipButton = ({text, onPress}) => {
     );
 }
 
-const Card = ({index, question, mode = 'QUESTION', onFlip, onCorrectPress, onIncorrectPress}) => {
-    const styles = StyleSheet.create({
-        container: {},
-        title: {
-            fontSize: 45
-        }
-    });
+const Card = ({index, total, question, mode = 'QUESTION', onFlip, onCorrectPress, onIncorrectPress}) => {
     return (
         <View flex="1" styles={styles.container}>
+            <View margin={10}>
+                <Text style={styles.index}>
+                    {index+1} / {total}
+                </Text>
+            </View>
             <View flex="2" alignItems="center" justifyContent="center" style={styles.container}>
                 <Text style={styles.title}>
                     {mode === 'QUESTION' ? question.question : question.answer}
                 </Text>
                 {mode === 'QUESTION' ? (
-                    <FlipButton text="Answer" />
+                    <FlipButton text="Answer" onPress={onFlip} />
                 ) : (
-                    <FlipButton text="Question" />
+                    <FlipButton text="Question" onPress={onFlip} />
                 )}
             </View>
-            <View height={300} alignItems="center" justifyContent="start" style={styles.container}>
+            <View height={200} alignItems="center" justifyContent="start" style={styles.container}>
                 <Button type="GREEN" title="Correct" onPress={onCorrectPress} />
                 <Button type="RED" title="Incorrect" onPress={onIncorrectPress}/>
             </View>
@@ -49,3 +48,16 @@ const Card = ({index, question, mode = 'QUESTION', onFlip, onCorrectPress, onInc
 };
 
 export default Card;
+
+const styles = StyleSheet.create({
+    index: {
+        fontSize: 20
+    },
+    container: {
+        margin: 10
+    },
+    title: {
+        fontSize: 35,
+        textAlign: 'center'
+    }
+});
