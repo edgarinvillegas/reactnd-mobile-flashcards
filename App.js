@@ -1,4 +1,5 @@
 import React from 'react';
+import {StatusBar, View} from "react-native";
 import { Provider } from 'mobx-react';
 
 import sampleData from './src/data/sampleData';
@@ -11,11 +12,24 @@ setTimeout(() => {
     console.log('Deck added');
 }, 5000);
 
+const TopBar = () => {
+    const backgroundColor = 'black';
+    return (
+        <View style={{backgroundColor, height: 30 }}>
+            <StatusBar transluscent backgroundColor={backgroundColor} barStyle="light-content"/>
+        </View>
+    )
+    
+}
+
 export default class App extends React.Component {
   render() {
     return (
       <Provider deckStore={deckStore}>
-          <Main/>
+          <View flex={1}>
+              <TopBar />
+              <Main />
+          </View>
       </Provider>
     );
   }
