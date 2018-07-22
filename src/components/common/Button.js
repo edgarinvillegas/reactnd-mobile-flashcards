@@ -1,7 +1,7 @@
 import React from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from "react-native";
 
-const BasicButton = ({ title, borderColor, fontColor = borderColor, backgroundColor}) => {
+const BasicButton = ({ title, borderColor, fontColor = borderColor, backgroundColor, onPress = () => {} }) => {
     const styles = StyleSheet.create({
         container: {
             borderWidth: 2,
@@ -23,7 +23,7 @@ const BasicButton = ({ title, borderColor, fontColor = borderColor, backgroundCo
     });
     
     return (
-        <TouchableOpacity>
+        <TouchableOpacity onPress={onPress}>
             <View alignItems='center' style={styles.container}>
                 <Text style={styles.text}>{title}</Text>
             </View>
@@ -31,12 +31,12 @@ const BasicButton = ({ title, borderColor, fontColor = borderColor, backgroundCo
     );
 };
 
-const Button = ({ title, type }) => {
+const Button = ({ title, type, onPress = () => {} }) => {
     switch(type){
-        case 'WHITE': return <BasicButton title={title} borderColor="black" />;
-        case 'BLACK': return <BasicButton title={title} backgroundColor="black" />;
-        case 'GREEN': return <BasicButton title={title} backgroundColor="green" />;
-        case 'RED': return <BasicButton title={title} backgroundColor="red" />;
+        case 'WHITE': return <BasicButton title={title} borderColor="black" onPress={onPress} />;
+        case 'BLACK': return <BasicButton title={title} backgroundColor="black" onPress={onPress} />;
+        case 'GREEN': return <BasicButton title={title} backgroundColor="green" onPress={onPress} />;
+        case 'RED': return <BasicButton title={title} backgroundColor="red" onPress={onPress} />;
     }
 }
 

@@ -44,6 +44,7 @@ export default class DeckList extends Component {
             <View flex="1" styles={styles.container}>
                 <FlatList
                     data={Object.values(deckStore.getDecks())}
+                    keyExtractor={(deck) => deck.title }
                     renderItem={({ item: deck }) => (
                         <DeckCard
                             deck={deck}

@@ -12,8 +12,7 @@ export default class Deck extends Component {
         }
     }
     render() {
-        console.log('this.props', this.props);
-        const deck = this.props.navigation.getParam('deck');
+        const deck = this.getCurrentDeck();
         return (
             <View flex="1" styles={styles.container}>
                 <View flex="2" alignItems="center" justifyContent="center" style={styles.container}>
@@ -25,8 +24,8 @@ export default class Deck extends Component {
                     </Text>
                 </View>
                 <View height={300} alignItems="center" justifyContent="start" style={styles.container}>
-                    <Button type="WHITE" title="Add Card" />
-                    <Button type="BLACK" title="Start Quiz" />
+                    <Button type="WHITE" title="Add Card" onPress={this.onAddCard} />
+                    <Button type="BLACK" title="Start Quiz" onPress={this.startQuiz} />
                     {/*<Button type="GREEN" title="Correct" />*/}
                     {/*<Button type="RED" title="Incorrect" />*/}
 
@@ -34,6 +33,21 @@ export default class Deck extends Component {
             </View>
         );
     }
+    
+    getCurrentDeck = () => {
+        return this.props.navigation.state.params.deck;
+    };
+    
+    onAddCard = () => {
+        alert('add card');
+    };
+    
+    startQuiz = () => {
+        this.props.navigation.navigate('Quiz', {
+            deckId: this.getCurrentDeck().title,
+            // index: 0
+        });
+    };
 }
 
 const styles = StyleSheet.create({
