@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import {inject, observer} from 'mobx-react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet, FlatList} from 'react-native';
 
 /*
 {
@@ -53,12 +53,12 @@ const DeckSumary = ({ deck }) => {
 export default class DeckList extends Component {
     render() {
         const { deckStore } = this.props;
-        console.log(Object.entries(deckStore.getDecks()));
         return (
             <View flex="1" styles={styles.container}>
-                {Object.entries(deckStore.getDecks()).map( ([deckKey, deck]) => (
-                    <DeckSumary deck={deck}/>
-                ))}
+                <FlatList
+                    data={Object.values(deckStore.getDecks())}
+                    renderItem={({ item }) => <DeckSumary deck={item} /> }
+                />
             </View>
         );
     }
