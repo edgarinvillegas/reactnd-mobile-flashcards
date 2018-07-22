@@ -1,25 +1,10 @@
 import React, { Component } from 'react';
 
 import {inject, observer} from 'mobx-react';
-import {View, Text, StyleSheet, FlatList} from 'react-native';
+import {View, Text, StyleSheet, FlatList, TouchableOpacity} from 'react-native';
+import Button from "./common/Button";
 
-/*
-{
-        title: 'React',
-        questions: [
-            {
-                question: 'What is React?',
-                answer: 'A library for managing user interfaces'
-            },
-            {
-                question: 'Where do you make Ajax requests in React?',
-                answer: 'The componentDidMount lifecycle event'
-            }
-        ]
-    }
-*/
-
-const DeckSumary = ({ deck }) => {
+const DeckCard = ({ deck, onDeckPress }) => {
     const styles = StyleSheet.create({
         container: {
             height: 150,
@@ -28,7 +13,7 @@ const DeckSumary = ({ deck }) => {
             borderStyle: 'solid'
         },
         title: {
-            fontSize: 20
+            fontSize: 25
         },
         subtitle: {
             color: '#666666'
@@ -36,14 +21,16 @@ const DeckSumary = ({ deck }) => {
     });
     
     return (
-        <View alignItems="center" justifyContent="center" style={styles.container}>
-            <Text style={styles.title}>
-                {deck.title}
-            </Text>
-            <Text style={styles.subtitle}>
-                {deck.questions.length} cards
-            </Text>
-        </View>
+        <TouchableOpacity onPress={onDeckPress}>
+            <View alignItems="center" justifyContent="center" style={styles.container}>
+                <Text style={styles.title}>
+                    {deck.title}
+                </Text>
+                <Text style={styles.subtitle}>
+                    {deck.questions.length} cards
+                </Text>
+            </View>
+        </TouchableOpacity>
     );
 }
 
@@ -57,10 +44,19 @@ export default class DeckList extends Component {
             <View flex="1" styles={styles.container}>
                 <FlatList
                     data={Object.values(deckStore.getDecks())}
-                    renderItem={({ item }) => <DeckSumary deck={item} /> }
+                    renderItem={({ item: deck }) => (
+                        <DeckCard
+                            deck={deck}
+                            onDeckPress={() => this.openDeck(deck)}
+                        />
+                    ) }
                 />
             </View>
         );
+    }
+    
+    openDeck = (deck) => {
+        this.props.navigation.navigate('Deck', {deck} )
     }
 }
 

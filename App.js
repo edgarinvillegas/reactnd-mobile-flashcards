@@ -27,7 +27,7 @@ export default class App extends React.Component {
     return (
       <Provider deckStore={deckStore}>
           <View flex={1}>
-              <TopBar />
+              {/*<TopBar />*/}
               <Main />
           </View>
       </Provider>
