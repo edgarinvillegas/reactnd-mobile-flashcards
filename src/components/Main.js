@@ -5,6 +5,7 @@ import { createStackNavigator } from 'react-navigation';
 import DeckTabs from "./DeckTabs";
 import Deck from "./Deck";
 import Quiz from "./Quiz";
+import NewCard from "./NewCard";
 
 const MainStack = createStackNavigator({
     DeckTabs: {
@@ -35,7 +36,18 @@ const MainStack = createStackNavigator({
             },
             headerTintColor: 'white'
         }
-    }
+    },
+    NewCard: {
+        screen: NewCard,
+        navigationOptions: {
+            title: 'Add Card',
+            headerStyle: {
+                // height: 30,
+                backgroundColor: 'rgba(29,139,241,1)'
+            },
+            headerTintColor: 'white'
+        }
+    },
 }, {
 
 });
