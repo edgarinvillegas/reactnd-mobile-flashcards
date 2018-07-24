@@ -6,9 +6,9 @@ import Button from "./common/Button";
 function getAppreciation(score) {
     return (
         score < 1 ? 'Not a single point!' :
-        score <= 25 ? 'What happened?' :
+        score <= 25 ? 'You\'d better study!' :
         score <= 50 ? 'Better luck next time!' :
-        score <= 75 ? 'You can do better' :
+        score <= 75 ? 'We know you can do better!' :
         score <= 90 ? 'Very good!' :
         score < 100 ? 'Excellent!' :
         'Perfect!'
@@ -45,6 +45,7 @@ const styles = StyleSheet.create({
         textAlign: 'center'
     },
     subtitle: {
-        fontSize: 30
+        fontSize: 30,
+        textAlign: 'center'
     }
 });

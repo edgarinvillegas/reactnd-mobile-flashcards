@@ -1,4 +1,4 @@
-import { toJS, autorun, observable } from 'mobx';
+import { toJS, autorun, computed, observable } from 'mobx';
 
 export default class Data {
     static storageKey = 'MOBILE_FLASHCARDS:data';
@@ -8,6 +8,7 @@ export default class Data {
         if(data) {
             Object.assign(this.data, data);
         }
+        // autorun(() => console.log(this.theData));
         // autorun(() => console.log(this.theData));
         this.persist$();
     }
@@ -25,6 +26,12 @@ export default class Data {
     getDecks() {
         return this.data;
     }
+    
+    /*
+    @computed get decks() {
+        return this.data;
+    }
+    */
     
     getDeck(id) {
         return this.data[id];

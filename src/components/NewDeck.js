@@ -11,6 +11,7 @@ export default class NewDeck extends Component {
     state = {
         deckTitle: ''
     }
+    
     render() {
         return (
             <KeyboardAvoidingView flex="1" behavior="padding" styles={styles.container}>
@@ -40,6 +41,9 @@ export default class NewDeck extends Component {
     saveDeck = () => {
         const deckTitle = this.state.deckTitle;
         this.props.deckStore.addDeck$(deckTitle);
+        this.setState({
+            deckTitle: ''
+        });
         this.props.navigation.navigate('NewCard', { deckId: deckTitle } );
     }
 }

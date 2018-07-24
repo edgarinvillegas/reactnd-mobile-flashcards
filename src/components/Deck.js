@@ -4,6 +4,7 @@ import {View, Text, StyleSheet, FlatList, TouchableOpacity} from 'react-native';
 
 import Button from "./common/Button";
 
+@observer
 export default class Deck extends Component {
     static navigationOptions = ({ navigation }) => {
         const { deck } = navigation.state.params;
@@ -20,15 +21,12 @@ export default class Deck extends Component {
                         {deck.title}
                     </Text>
                     <Text style={styles.subtitle}>
-                        {deck.questions.length} cards
+                        {deck.questions.length} {deck.questions.length === 1 ? 'card' : 'cards'}
                     </Text>
                 </View>
                 <View height={300} alignItems="center" justifyContent="start" style={styles.container}>
                     <Button type="WHITE" title="Add Card" onPress={this.onAddCard} />
                     <Button type="BLACK" title="Start Quiz" onPress={this.startQuiz} />
-                    {/*<Button type="GREEN" title="Correct" />*/}
-                    {/*<Button type="RED" title="Incorrect" />*/}
-
                 </View>
             </View>
         );
@@ -39,13 +37,15 @@ export default class Deck extends Component {
     };
     
     onAddCard = () => {
-        alert('add card');
+        this.props.navigation.navigate('NewCard', {
+            deckId: this.getCurrentDeck().title,
+            from: 'DECK'
+        });
     };
     
     startQuiz = () => {
         this.props.navigation.navigate('Quiz', {
-            deckId: this.getCurrentDeck().title,
-            // index: 0
+            deckId: this.getCurrentDeck().title
         });
     };
 }

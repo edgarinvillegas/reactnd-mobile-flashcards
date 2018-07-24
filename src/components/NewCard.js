@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {KeyboardAvoidingView, StyleSheet, Text, TextInput, View} from 'react-native';
+import { StackActions, NavigationActions } from 'react-navigation';
 import {inject, observer} from "mobx-react";
 
 import Button from "./common/Button";
@@ -34,24 +35,46 @@ export default class NewCard extends Component {
                         disabled={!this.state.question.trim() || !this.state.answer.trim()}
                         type="BLACK"
                         title="Submit"
-                        onPress={this.saveDeck}
+                        onPress={this.saveCard}
                     />
                 </View>
             </KeyboardAvoidingView>
         );
     }
     
+    getNavigationParam = (paramKey) => {
+        return this.props.navigation.state.params[paramKey];
+    }
+    
     getDeckId = () => {
         return this.props.navigation.state.params.deckId;
     }
     
-    saveDeck = () => {
+    saveCard = () => {
         this.props.deckStore.addCardToDeck$(this.getDeckId(), {
             question: this.state.question,
             answer: this.state.answer
         });
         const deck = this.props.deckStore.getDeck(this.getDeckId());
-        this.props.navigation.navigate('Deck', { deck });
+
+        console.log('FROM: ', this.getNavigationParam('from'));
+        
+        let navigationAction;
+        if (this.getNavigationParam('from') === 'DECK') {
+            navigationAction = StackActions.pop({
+                n: 1,
+            });
+        } else {
+            navigationAction = StackActions.reset({
+                index: 1,
+                actions: [
+                    NavigationActions.navigate({routeName: 'DeckTabs'}),
+                    NavigationActions.navigate({routeName: 'Deck',  params: { deck }})
+                ],
+                // key: 'DeckTabs'
+            });
+        }
+        this.props.navigation.dispatch(navigationAction);
     }
 }
 

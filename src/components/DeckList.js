@@ -4,7 +4,7 @@ import {inject, observer} from 'mobx-react';
 import {View, Text, StyleSheet, FlatList, TouchableOpacity} from 'react-native';
 import Button from "./common/Button";
 
-const DeckCard = ({ deck, onDeckPress }) => {
+const DeckCard = observer(({ deck, onDeckPress }) => {
     const styles = StyleSheet.create({
         container: {
             height: 150,
@@ -27,12 +27,12 @@ const DeckCard = ({ deck, onDeckPress }) => {
                     {deck.title}
                 </Text>
                 <Text style={styles.subtitle}>
-                    {deck.questions.length} cards
+                    {deck.questions.length} {deck.questions.length === 1 ? 'card' : 'cards'}
                 </Text>
             </View>
         </TouchableOpacity>
     );
-}
+})
 
 
 @inject('deckStore')
