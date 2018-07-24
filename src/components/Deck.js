@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {inject, observer} from 'mobx-react';
-import {View, Text, StyleSheet, FlatList, TouchableOpacity} from 'react-native';
+import { Alert, View, Text, StyleSheet, FlatList, TouchableOpacity} from 'react-native';
 
 import Button from "./common/Button";
 
@@ -44,6 +44,10 @@ export default class Deck extends Component {
     };
     
     startQuiz = () => {
+        if(this.getCurrentDeck().questions.length === 0) {
+            Alert.alert('Your deck doesn\'t have cards!\nPlease add cards first.');
+            return;
+        }
         this.props.navigation.navigate('Quiz', {
             deckId: this.getCurrentDeck().title
         });
