@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {KeyboardAvoidingView, StyleSheet, Text, TextInput, View} from 'react-native';
+import {KeyboardAvoidingView, StyleSheet, TextInput, View} from 'react-native';
 import { StackActions, NavigationActions } from 'react-navigation';
 import {inject, observer} from "mobx-react";
 
@@ -12,7 +12,7 @@ export default class NewCard extends Component {
     state = {
         question: '',
         answer: ''
-    }
+    };
     render() {
         return (
             <KeyboardAvoidingView flex="1" behavior="padding" styles={styles.container}>
@@ -44,11 +44,11 @@ export default class NewCard extends Component {
     
     getNavigationParam = (paramKey) => {
         return this.props.navigation.state.params[paramKey];
-    }
+    };
     
     getDeckId = () => {
         return this.props.navigation.state.params.deckId;
-    }
+    };
     
     saveCard = () => {
         this.props.deckStore.addCardToDeck$(this.getDeckId(), {
@@ -56,25 +56,13 @@ export default class NewCard extends Component {
             answer: this.state.answer
         });
         const deck = this.props.deckStore.getDeck(this.getDeckId());
-
-        console.log('FROM: ', this.getNavigationParam('from'));
-        
-        let navigationAction;
-        if (this.getNavigationParam('from') === 'DECK') {
-            navigationAction = StackActions.pop({
-                n: 1,
-            });
-        } else {
-            navigationAction = StackActions.reset({
-                index: 1,
-                actions: [
-                    NavigationActions.navigate({routeName: 'DeckTabs'}),
-                    NavigationActions.navigate({routeName: 'Deck',  params: { deck }})
-                ],
-                // key: 'DeckTabs'
-            });
-        }
-        this.props.navigation.dispatch(navigationAction);
+        this.props.navigation.dispatch(StackActions.reset({
+            index: 1,
+            actions: [
+                NavigationActions.navigate({routeName: 'DeckTabs'}),
+                NavigationActions.navigate({routeName: 'Deck',  params: { deck }})
+            ]
+        }));
     }
 }
 

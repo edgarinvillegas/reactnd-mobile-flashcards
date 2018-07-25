@@ -9,7 +9,7 @@ import Button from "./common/Button";
 export default class NewDeck extends Component {
     state = {
         deckTitle: ''
-    }
+    };
     
     render() {
         return (
@@ -43,7 +43,7 @@ export default class NewDeck extends Component {
         this.setState({
             deckTitle: ''
         });
-        this.props.navigation.navigate('NewCard', { deckId: deckTitle } );
+        this.props.navigation.goBack();
     }
 }
 

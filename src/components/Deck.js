@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import {inject, observer} from 'mobx-react';
-import { Alert, View, Text, StyleSheet, FlatList, TouchableOpacity} from 'react-native';
+import { observer } from 'mobx-react';
+import { Alert, View, Text, StyleSheet } from 'react-native';
 
 import Button from "./common/Button";
 
@@ -11,7 +11,7 @@ export default class Deck extends Component {
         return {
             title: deck.title
         }
-    }
+    };
     render() {
         const deck = this.getCurrentDeck();
         return (
@@ -38,8 +38,7 @@ export default class Deck extends Component {
     
     onAddCard = () => {
         this.props.navigation.navigate('NewCard', {
-            deckId: this.getCurrentDeck().title,
-            from: 'DECK'
+            deckId: this.getCurrentDeck().title
         });
     };
     
