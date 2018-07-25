@@ -22,6 +22,11 @@ $ react-native run-ios
 
 Go to your simulator and voilá, start quizzing!.
 
+Alternativerly, you can use `yarn start` and then `i` to open on iOS simulator.
+
+Note: Currently the app **works only on iOS** due to Mobx 5 dependency.
+Making it work on Android is possible, but it needs an `eject` to change js engine natively, which was considered not to be worth it for the app purposes.
+
 
 ## Contributing
 
