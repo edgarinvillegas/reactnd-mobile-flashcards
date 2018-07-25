@@ -1,9 +1,21 @@
 import { AsyncStorage } from 'react-native';
-import { toJS, autorun, computed, observable } from 'mobx';
+import { toJS, observable } from 'mobx';
 
 export default class DecksStore {
     static storageKey = 'MOBILE_FLASHCARDS:data';
     @observable data = {};
+    persister = null;
+    
+    /**
+     * @param [data] Initial data
+     * @param [persister] Persister object. Should implement async getItem and async setItem. Will default to localStorage
+     */
+    constructor(data, persister) {
+        this.persister = persister || AsyncStorage;
+        if(data) {
+            Object.assign(this.data, data);
+        }
+    }
     
     toJS() {
         return toJS(this.data);
@@ -31,13 +43,13 @@ export default class DecksStore {
     }
     
     async load$() {
-        const persistedData = await AsyncStorage.getItem(DecksStore.storageKey);
+        const persistedData = await this.persister.getItem(DecksStore.storageKey);
         if(persistedData) {
             Object.assign(this.data, JSON.parse(persistedData));
         }
     }
     
     async persist$() {
-        await AsyncStorage.setItem(DecksStore.storageKey, JSON.stringify(this.toJS()));
+        await this.persister.setItem(DecksStore.storageKey, JSON.stringify(this.toJS()));
     }
 }

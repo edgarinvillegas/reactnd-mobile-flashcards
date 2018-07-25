@@ -1,9 +1,10 @@
+import { observer } from 'mobx-react/native'
 import { toJS } from 'mobx';
 
 import DecksData from "./DecksStore";
 
 describe('DecksData tests', () => {
-    const sampleData = data = {
+    const sampleData = {
         React: {
             title: 'React',
             questions: [
@@ -28,7 +29,10 @@ describe('DecksData tests', () => {
         }
     };
     
-    const decks = new DecksData(sampleData);
+    const decks = new DecksData(sampleData, {
+        getItem: () => {},
+        setItem: () => {}
+    });
     it('should getJS() succesfully', () => {
         expect(decks.toJS()).toEqual(sampleData);
     });
