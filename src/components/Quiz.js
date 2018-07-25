@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {inject, observer} from "mobx-react";
 import Card from "./Card";
 import QuizResult from "./QuizResult";
+import {saveQuizDateAndScheduleNextNotification} from "../helpers/notifications";
 
 @inject('deckStore')
 @observer
@@ -13,7 +14,7 @@ export default class Quiz extends Component {
     }
     render() {
         const { index, mode, correctCount } = this.state;
-        const total = this.getCurrentDeck().questions.length;
+        const total = this.getTotalQuestions();
         if(index >= total) {
             return (
                 <QuizResult
@@ -38,7 +39,14 @@ export default class Quiz extends Component {
         );
     }
     
+    getTotalQuestions = () => {
+        return this.getCurrentDeck().questions.length;
+    }
+    
     goNext = () => {
+        if(this.state.index + 1 >= this.getTotalQuestions()) {
+            saveQuizDateAndScheduleNextNotification(new Date());
+        }
         this.setState((state) => ({
             index: state.index + 1
         }));

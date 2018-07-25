@@ -1,7 +1,8 @@
 import { AsyncStorage } from 'react-native';
 import { Permissions, Notifications } from 'expo';
+import { isToday } from 'date-fns';
 
-const NOTIFICATION_KEY = 'MOBILE_FLASHCARDS:notifications:lastStudyingReminderScheduled';
+const NOTIFICATION_KEY = 'MOBILE_FLASHCARDS:notifications:lastQuiz';
 
 function getNotificationConfig() {
     return {
@@ -19,29 +20,33 @@ function getNotificationConfig() {
     }
 }
 
+export async function saveQuizDateAndScheduleNextNotification(date) {
+    await AsyncStorage.setItem(NOTIFICATION_KEY, JSON.stringify(date));
+    await scheduleQuizNotification();
+}
 
-export async function notifyStudying() {
-    const alreadyScheduled = !!await AsyncStorage.getItem().then(JSON.parse);
-    // If there was already a reminder today
-    // if(lastReminder && isToday(new Date(lastReminder))) return false;
-    if(alreadyScheduled) return false;
+export async function scheduleQuizNotification() {
+    const lastQuizStr = await AsyncStorage.getItem().then(JSON.parse);
+    // If user has already answered a quiz, notify starting next day. If not, from current day
+    const notificationDelta = lastQuizStr ? +1 : +0;
+    
     const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
     if(status === 'granted') {
         await Notifications.cancelAllScheduledNotificationsAsync();
-        let tomorrowMorning = (auxDate => {
-            auxDate.setDate(auxDate.getDate() + 1);
-            auxDate.setHours(8);
+        let nextNotificationDate = (auxDate => {
+            auxDate.setDate(auxDate.getDate() + notificationDelta);
+            auxDate.setHours(19);
             auxDate.setMinutes(0);
             auxDate.setSeconds(0);
-        })(new Date());
+        })(lastQuizStr ? new Date(lastQuizStr) : new Date());
         await Notifications.scheduleLocalNotificationAsync(
             getNotificationConfig(),
             {
-                time: tomorrowMorning,
+                time: nextNotificationDate,
                 repeat: 'day'
             }
         );
-        await AsyncStorage.setItem(NOTIFICATION_KEY, JSON.stringify(true));
+        return true;
     }
     return false;
 }

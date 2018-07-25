@@ -4,7 +4,7 @@ import { Provider } from 'mobx-react';
 
 import DecksStore from "./src/data/DecksStore";
 import Main from "./src/components/Main";
-import { notifyStudying } from "./src/helpers/notifications";
+import { scheduleQuizNotification } from "./src/helpers/notifications";
 
 const deckStore = new DecksStore();
 const TopBar = () => {
@@ -18,7 +18,7 @@ const TopBar = () => {
 
 export default class App extends React.Component {
   async componentDidMount() {
-      notifyStudying();
+      scheduleQuizNotification();
       await deckStore.load$();
       console.log('MOBILE_FLASHCARDS:data', await AsyncStorage.getItem('MOBILE_FLASHCARDS:data'));
   }
