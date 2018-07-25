@@ -4,7 +4,6 @@ import {inject, observer} from "mobx-react";
 
 import Button from "./common/Button";
 
-
 @inject('deckStore')
 @observer
 export default class NewDeck extends Component {

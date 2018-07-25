@@ -1,18 +1,11 @@
 import React, {Component} from 'react';
 import {inject, observer} from "mobx-react";
 import Card from "./Card";
-import {Text, View} from "react-native";
 import QuizResult from "./QuizResult";
 
 @inject('deckStore')
 @observer
 export default class Quiz extends Component {
-    /*static getDerivedStateFromProps(props){
-        const navIndex = props.navigation.state.params.index;
-        return {
-            index: props.index !== undefined ? props.index : navIndex
-        }
-    }*/
     state = {
         index: 0,
         mode: 'QUESTION',

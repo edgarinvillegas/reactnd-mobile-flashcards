@@ -32,7 +32,16 @@ const DeckCard = observer(({ deck, onDeckPress }) => {
             </View>
         </TouchableOpacity>
     );
-})
+});
+
+const NoDecks = ({ onAddDeckPress }) => (
+    <View flex="1" alignItems={'center'} justifyContent={'center'}>
+        <Text style={{ fontSize: 30, margin: 20 }}>
+            You don't have decks yet!
+        </Text>
+        <Button type="WHITE" title="Add Deck" onPress={onAddDeckPress} />
+    </View>
+);
 
 
 @inject('deckStore')
@@ -42,16 +51,20 @@ export default class DeckList extends Component {
         const { deckStore } = this.props;
         return (
             <View flex="1" styles={styles.container}>
-                <FlatList
-                    data={Object.values(deckStore.getDecks())}
-                    keyExtractor={(deck) => deck.title }
-                    renderItem={({ item: deck }) => (
-                        <DeckCard
-                            deck={deck}
-                            onDeckPress={() => this.openDeck(deck)}
-                        />
-                    ) }
-                />
+                {Object.keys(deckStore.getDecks()).length === 0 ? (
+                    <NoDecks onAddDeckPress={() => this.props.navigation.navigate('NewDeck')} />
+                    ) : (
+                    <FlatList
+                        data={Object.values(deckStore.getDecks())}
+                        keyExtractor={(deck) => deck.title }
+                        renderItem={({ item: deck }) => (
+                            <DeckCard
+                                deck={deck}
+                                onDeckPress={() => this.openDeck(deck)}
+                            />
+                        ) }
+                    />
+                )}
             </View>
         );
     }

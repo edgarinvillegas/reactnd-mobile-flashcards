@@ -1,7 +1,8 @@
 import React from 'react';
-import {StyleSheet, Text, View} from "react-native";
+import {StyleSheet, View} from "react-native";
 
 import Button from "./common/Button";
+import AnimatedPie from "./AnimatedPie";
 
 function getAppreciation(score) {
     return (
@@ -20,12 +21,7 @@ const QuizResult = ({ correctCount, total, onBackPress }) => {
     return (
         <View flex="1" styles={styles.container}>
             <View flex="2" alignItems="center" justifyContent="center" style={styles.container}>
-                <Text style={styles.title}>
-                    {score}%
-                </Text>
-                <Text style={styles.subtitle}>
-                    {getAppreciation(score)}
-                </Text>
+                <AnimatedPie percentage={score} subtitle={getAppreciation(score)} />
             </View>
             <View height={200} alignItems="center" justifyContent="start" style={styles.container}>
                 <Button type="WHITE" title="< Go back" onPress={onBackPress} />
@@ -39,13 +35,5 @@ export default QuizResult;
 const styles = StyleSheet.create({
     container: {
         margin: 10
-    },
-    title: {
-        fontSize: 100,
-        textAlign: 'center'
-    },
-    subtitle: {
-        fontSize: 30,
-        textAlign: 'center'
     }
 });
