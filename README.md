@@ -1,4 +1,4 @@
-# Mobile flashcards?
+# Mobile flashcards
 
 Simple application to autoevaluate using decks of question cards.
 
