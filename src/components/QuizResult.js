@@ -16,7 +16,7 @@ function getAppreciation(score) {
     );
 }
 
-const QuizResult = ({ correctCount, total, onBackPress }) => {
+const QuizResult = ({ correctCount, total, onBackPress, onRestartPress }) => {
     const score = (correctCount / total * 100).toFixed();
     return (
         <View flex="1" styles={styles.container}>
@@ -25,6 +25,7 @@ const QuizResult = ({ correctCount, total, onBackPress }) => {
             </View>
             <View height={200} alignItems="center" justifyContent="start" style={styles.container}>
                 <Button type="WHITE" title="< Go back" onPress={onBackPress} />
+                <Button type="BLACK" title="Restart Quiz" onPress={onRestartPress} />
             </View>
         </View>
     );

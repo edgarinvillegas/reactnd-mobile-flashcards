@@ -20,6 +20,7 @@ export default class Quiz extends Component {
                     correctCount={correctCount}
                     total={total}
                     onBackPress={() => this.props.navigation.goBack()}
+                    onRestartPress={() => this.setState({ index: 0 })}
                 />
             );
         }
