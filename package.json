@@ -19,6 +19,7 @@
     "preset": "jest-expo"
   },
   "dependencies": {
+    "date-fns": "^1.29.0",
     "expo": "^27.0.1",
     "mobx": "^5.0.3",
     "mobx-react": "^5.2.3",
