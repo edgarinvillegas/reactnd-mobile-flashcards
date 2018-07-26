@@ -19,11 +19,11 @@ function getAppreciation(score) {
 const QuizResult = ({ correctCount, total, onBackPress, onRestartPress }) => {
     const score = (correctCount / total * 100).toFixed();
     return (
-        <View flex="1" styles={styles.container}>
-            <View flex="2" alignItems="center" justifyContent="center" style={styles.container}>
+        <View style={styles.container}>
+            <View style={styles.pieContainer}>
                 <AnimatedPie percentage={score} subtitle={getAppreciation(score)} />
             </View>
-            <View height={200} alignItems="center" justifyContent="start" style={styles.container}>
+            <View style={styles.buttonsContainer}>
                 <Button type="WHITE" title="< Go back" onPress={onBackPress} />
                 <Button type="BLACK" title="Restart Quiz" onPress={onRestartPress} />
             </View>
@@ -35,6 +35,18 @@ export default QuizResult;
 
 const styles = StyleSheet.create({
     container: {
-        margin: 10
+        flex: 1,
+        margin: 10,
+        marginTop: 20
+    },
+    pieContainer: {
+        flex: 2,
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    buttonsContainer: {
+        height: 200,
+        alignItems: 'center',
+        justifyContent: 'flex-start'
     }
 });

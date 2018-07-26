@@ -15,8 +15,8 @@ export default class Deck extends Component {
     render() {
         const deck = this.getCurrentDeck();
         return (
-            <View flex="1" styles={styles.container}>
-                <View flex="2" alignItems="center" justifyContent="center" style={styles.container}>
+            <View style={styles.container}>
+                <View style={styles.titleSubtitleContainer}>
                     <Text style={styles.title}>
                         {deck.title}
                     </Text>
@@ -24,7 +24,7 @@ export default class Deck extends Component {
                         {deck.questions.length} {deck.questions.length === 1 ? 'card' : 'cards'}
                     </Text>
                 </View>
-                <View height={300} alignItems="center" justifyContent="start" style={styles.container}>
+                <View style={styles.buttonsContainer}>
                     <Button type="WHITE" title="Add Card" onPress={this.onAddCard} />
                     <Button type="BLACK" title="Start Quiz" onPress={this.startQuiz} />
                 </View>
@@ -55,6 +55,12 @@ export default class Deck extends Component {
 
 const styles = StyleSheet.create({
     container: {
+        flex: 1
+    },
+    titleSubtitleContainer: {
+        flex: 2,
+        alignItems: 'center',
+        justifyContent: 'center'
     },
     title: {
         fontSize: 45
@@ -62,5 +68,10 @@ const styles = StyleSheet.create({
     subtitle: {
         color: '#666666',
         fontSize: 30
+    },
+    buttonsContainer: {
+        height: 300,
+        alignItems: 'center',
+        justifyContent: 'flex-start'
     }
 });

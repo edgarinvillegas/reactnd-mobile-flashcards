@@ -13,8 +13,8 @@ export default class NewDeck extends Component {
     
     render() {
         return (
-            <KeyboardAvoidingView flex="1" behavior="padding" styles={styles.container}>
-                <View flex="2" alignItems="center" justifyContent="center" style={styles.container}>
+            <KeyboardAvoidingView behavior="padding" style={styles.container}>
+                <View style={styles.textContainer}>
                     <Text style={styles.title}>
                         What is the title of your new deck?
                     </Text>
@@ -25,7 +25,7 @@ export default class NewDeck extends Component {
                         onChangeText={deckTitle => { this.setState({ deckTitle }) }}
                     />
                 </View>
-                <View flex="1" alignItems="center" justifyContent="start" style={styles.container}>
+                <View style={styles.buttonContainer}>
                     <Button
                         disabled={!this.state.deckTitle.trim()}
                         type="BLACK"
@@ -43,12 +43,26 @@ export default class NewDeck extends Component {
         this.setState({
             deckTitle: ''
         });
-        this.props.navigation.goBack();
+        const newDeck = this.props.deckStore.getDeck(deckTitle);
+        this.props.navigation.navigate('Deck', { deck: newDeck });
     }
 }
 
 const styles = StyleSheet.create({
     container: {
+        flex: 1,
+        margin: 10
+    },
+    textContainer: {
+        flex: 2,
+        alignItems: 'center',
+        justifyContent: 'center',
+        margin: 10
+    },
+    buttonContainer: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'flex-start',
         margin: 10
     },
     title: {

@@ -15,8 +15,8 @@ export default class NewCard extends Component {
     };
     render() {
         return (
-            <KeyboardAvoidingView flex="1" behavior="padding" styles={styles.container}>
-                <View flex="2" alignItems="center" justifyContent="center" style={styles.container}>
+            <KeyboardAvoidingView behavior="padding" style={styles.container}>
+                <View style={styles.qaContainer}>
                     <TextInput
                         placeholder="Question"
                         style={styles.textbox}
@@ -30,7 +30,7 @@ export default class NewCard extends Component {
                         onChangeText={answer => { this.setState({ answer }) }}
                     />
                 </View>
-                <View flex="1" alignItems="center" justifyContent="start" style={styles.container}>
+                <View style={styles.buttonContainer}>
                     <Button
                         disabled={!this.state.question.trim() || !this.state.answer.trim()}
                         type="BLACK"
@@ -68,6 +68,19 @@ export default class NewCard extends Component {
 
 const styles = StyleSheet.create({
     container: {
+        flex: 1,
+        margin: 10
+    },
+    qaContainer: {
+        flex: 2,
+        alignItems: 'center',
+        justifyContent: 'center',
+        margin: 10
+    },
+    buttonContainer: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'flex-start',
         margin: 10
     },
     title: {

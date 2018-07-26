@@ -50,7 +50,7 @@ export default class DeckList extends Component {
     render() {
         const { deckStore } = this.props;
         return (
-            <View flex="1" styles={styles.container}>
+            <View style={styles.container}>
                 {Object.keys(deckStore.getDecks()).length === 0 ? (
                     <NoDecks onAddDeckPress={() => this.props.navigation.navigate('NewDeck')} />
                     ) : (
@@ -76,5 +76,6 @@ export default class DeckList extends Component {
 
 const styles = StyleSheet.create({
     container: {
-    },
+        flex: 1
+    }
 });
